@@ -9,11 +9,11 @@ export default function Card(props) {
     const { 
         name, author, description, language,
         topContributorUsername, topContributorA, topContributorD, 
-        topContributorC, updatedAt
+        topContributorC, updatedAt, url
     } = props;
 
     return (
-        <div className="Card">
+        <a className="Card" href={url} rel="noopener noreferrer" target="_blank">
             <div className="Card--repositoryInfo">
                 <h2 className="Card--repositoryInfo--name">{name}</h2>
                 <p className="Card--repositoryInfo--author">{author}</p>
@@ -53,11 +53,12 @@ export default function Card(props) {
                     Updated on {dayjs(updatedAt).format("MMM DD, YYYY")}
                 </p>
             </div>
-        </div>
+        </a>
     );
 }
 
 Card.propTypes = {
+    url: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
     language: PropTypes.string.isRequired,

@@ -2,7 +2,7 @@ import React from "react";
 
 export default function CrossIcon(props) {
 
-    const { size = "35px" } = props;
+    const { size = "25px" } = props;
 
     return (
         <svg

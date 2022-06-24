@@ -1,4 +1,12 @@
 .Container {
     width: 100%;
+    display: flex;
     max-width: 60vw;
+    align-items: center;
+    padding-inline: 16px;
+    flex-direction: column;
+
+    @media screen and (max-width: 768px) {
+        max-width: 90vw;   
+    }
 }
