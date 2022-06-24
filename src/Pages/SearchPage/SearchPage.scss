@@ -1,0 +1,42 @@
+.SearchPage {
+    display: flex;
+    min-width: 100vw;
+    min-height: 100vh;
+    padding-top: 100px;
+    align-items: center;
+    flex-direction: column;
+    background-color: #fafafa;
+    
+    &--searchDiv {
+        width: 90%;
+        height: 70px;
+        display: flex;
+        border-radius: 7px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+        input {
+            width: 90%;
+            border: none;
+            font-size: 18px;
+            padding-inline: 30px;
+            border-radius: 7px 0 0 7px;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        button {
+            width: 10%;
+            border: none;
+            cursor: pointer;
+            border-radius: 0 7px 7px 0;
+            background-color: #FFFFFF;
+        }
+    }
+
+    &--repositories {
+        width: 100%;
+        margin-block: 50px;
+    }
+}
