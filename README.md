@@ -12,6 +12,7 @@ REACT_APP_API_URL=http://localhost:3100
 
 In the project directory, you can run:
 
+- `npm i` to install necessary packages
 - `npm start` to start the application
 
 

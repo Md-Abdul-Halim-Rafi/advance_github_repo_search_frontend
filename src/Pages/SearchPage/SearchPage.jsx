@@ -54,8 +54,6 @@ export default function SearchPage() {
 
         const { q, page } = qs.parse(window.location.search);
 
-        console.log("q, page");
-
         if (q) {
             setActivePage(page ? parseInt(page) : 1);
             loadRepositories(q, page ? parseInt(page) : 1);
@@ -118,12 +116,14 @@ export default function SearchPage() {
                                     isArrayAndHasContent(repositories) ?
                                         <button
                                             type="button"
+                                            aria-label="Clear search"
                                             onClick={() => handleClear(fr)}
                                         >
                                             <CrossIcon />
                                         </button> :
                                         <button
                                             type="submit"
+                                            aria-label="Search"
                                         >
                                             <SearchIcon />
                                         </button>
