@@ -22,3 +22,18 @@ In the project directory, you can run:
 
 This application is deployed on the Netlify. 
 You can check it on: https://nuport.mainly.codes
+
+
+<br />
+
+
+### Lighthouse scores
+
+- On Mobile Device:
+<br />
+![Mobile Lighthouse](public/extra/mobile-lighthouse.png)
+
+
+- On Desktop Device:
+<br />
+![Desktop Lighthouse](public/extra/desktop-lighthouse.png)
