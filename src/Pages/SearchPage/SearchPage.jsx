@@ -1,26 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import qs from "query-string";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
-import axios from "Utils/axiosInstace";
 
 import Container from "Components/Container/Container";
+import Loader from "Components/Loader/Loader";
 import Card from "Components/Card/Card";
+import Pagination from "Components/Pagination/Pagination";
 
 import SearchIcon from "Components/SvgIcons/SearchIcon";
-// import CrossIcon from "Components/SvgIcons/CrossIcon";
+import CrossIcon from "Components/SvgIcons/CrossIcon";
+
+import axios from "Utils/axiosInstace";
+import { isArrayAndHasContent } from "Utils/utils";
 
 import "./SearchPage.scss";
-import Loader from "Components/Loader/Loader";
 
 const schema = yup.object().shape({
-    q: yup.string().required("Search Key is required"),
+    q: yup.string().nullable().required("Search Key is required"),
 });
 
-export default function SearchPage(props) {
+const MAX_LIMIT = 20;
+
+export default function SearchPage() {
 
     const [loading, setLoading] = useState(false);
-    const [repositories, setRepositories] = useState([]);
+    const [repositories, setRepositories] = useState(null);
     const [count, setCount] = useState(null);
     const [activePage, setActivePage] = useState(1);
 
@@ -49,21 +54,43 @@ export default function SearchPage(props) {
 
         const { q, page } = qs.parse(window.location.search);
 
-        setActivePage(page);
-        loadRepositories(q, page);
+        console.log("q, page");
+
+        if (q) {
+            setActivePage(page ? parseInt(page) : 1);
+            loadRepositories(q, page ? parseInt(page) : 1);
+        }
 
     }, []);
 
-    const handleSubmit = async (values) => {
+    const handleSubmit = (values) => {
         window.history.pushState(null, null, `?q=${values.q}&page=${activePage}`);
         loadRepositories(values.q, activePage);
+    }
+
+    const handleClear = (fr) => {
+        fr.setFieldValue("q", "");
+        setRepositories([]);
+        setCount(null);
+        window.history.pushState(null, null, "/");
+    }
+
+    const onPageChange = (page) => {
+
+        const { q } = qs.parse(window.location.search);
+
+        if (q) {
+            setActivePage(page);
+            window.history.pushState(null, null, `?q=${q}&page=${page}`);
+            loadRepositories(q, page);
+        }
     }
 
     return (
         <div className="SearchPage">
             <Container>
                 <Formik
-                    initialValues={{ q: qs.parse(window.location.search).q }}
+                    initialValues={{ q: qs.parse(window.location.search).q || "" }}
                     validationSchema={schema}
                     onSubmit={handleSubmit}
                 >
@@ -72,21 +99,35 @@ export default function SearchPage(props) {
                             <Form
                                 className="SearchPage--searchDiv"
                                 style={{
-                                    border: fr.touched.q && fr.errors.q ? "2px solid crimson" : "none",
+                                    border: fr.errors.q ? "2px solid crimson" : "none",
                                 }}
                             >
                                 <input
                                     name="q"
-                                    placeholder="Search for a repository..."
+                                    placeholder={
+                                        fr.touched.q && fr.errors.q ?
+                                            "Search key is required" :
+                                            "Search for a repository..."
+                                    }
                                     value={fr.values.q}
                                     onBlur={fr.handleBlur}
                                     onChange={fr.handleChange}
                                 />
 
-                                <button>
-                                    <SearchIcon />
-                                    {/* <CrossIcon /> */}
-                                </button>
+                                {
+                                    isArrayAndHasContent(repositories) ?
+                                        <button
+                                            type="button"
+                                            onClick={() => handleClear(fr)}
+                                        >
+                                            <CrossIcon />
+                                        </button> :
+                                        <button
+                                            type="submit"
+                                        >
+                                            <SearchIcon />
+                                        </button>
+                                }
                             </Form>
                         )
                     }
@@ -96,20 +137,36 @@ export default function SearchPage(props) {
                     {
                         loading ?
                             <Loader /> :
-                            repositories.map(repo => (
-                                <Card
-                                    name={repo.name}
-                                    author={repo.author}
-                                    description={repo.description}
-                                    language={repo.language}
-                                    topContributorUsername={repo.topContributorUsername}
-                                    topContributorA={repo.topContributorAdditions}
-                                    topContributorD={repo.topContributorDeletions}
-                                    topContributorC={repo.topContributorCommits}
-                                    updatedAt={repo.updatedAt}
-                                    url={repo.url}
-                                />
-                            ))
+                            isArrayAndHasContent(repositories) &&
+                            <Fragment>
+                                {
+                                    repositories.map(repo => (
+                                        <Card
+                                            key={repo.id}
+                                            name={repo.name}
+                                            author={repo.author}
+                                            description={repo.description}
+                                            language={repo.language}
+                                            topContributorUsername={repo.topContributorUsername}
+                                            topContributorA={repo.topContributorAdditions}
+                                            topContributorD={repo.topContributorDeletions}
+                                            topContributorC={repo.topContributorCommits}
+                                            updatedAt={repo.updatedAt}
+                                            url={repo.url}
+                                        />
+                                    ))
+                                }
+
+                                <div className="SearchPage--repositories--pagenation">
+                                    <Pagination
+                                        totalCount={count}
+                                        maxLimit={MAX_LIMIT}
+                                        activePage={activePage}
+                                        onPageChange={onPageChange}
+                                    />
+                                </div>
+
+                            </Fragment>
                     }
                 </div>
             </Container>

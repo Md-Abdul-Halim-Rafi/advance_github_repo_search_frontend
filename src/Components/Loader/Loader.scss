@@ -12,8 +12,8 @@
     &--spinner {
         border-radius: 50%;
         border: 5px solid #c2c2c2;
+        border-top: 5px solid #183052;
         animation: spin 1s linear infinite;
-        border-top: 5px solid rgb(22, 22, 22);
     }
 
     @keyframes spin {

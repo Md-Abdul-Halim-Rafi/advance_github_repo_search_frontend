@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export default function CrossIcon(props) {
 
@@ -22,4 +23,8 @@ export default function CrossIcon(props) {
             ></path>
         </svg>
     );
+}
+
+CrossIcon.propTypes = {
+    size: PropTypes.string
 }

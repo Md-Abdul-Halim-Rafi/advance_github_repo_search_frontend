@@ -1,16 +1,12 @@
 .SearchPage {
     display: flex;
-    min-width: 100vw;
+    min-width: 80vw;
     min-height: 100vh;
     position: relative;
-    padding-top: 100px;
     align-items: center;
     flex-direction: column;
+    justify-content: center;
     background-color: #fafafa;
-
-    @media screen and (max-width: 768px) {
-        padding-top: 50px;   
-    }
 
     &--searchDiv {
         top: 50px;
@@ -50,8 +46,14 @@
         margin-block: 50px;
         width: -webkit-fill-available;
 
+        &--pagenation {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+        }
+
         @media screen and (max-width: 768px) {
-            margin-block: 25px;
+            margin-block: 70px;
         }
     }
 }

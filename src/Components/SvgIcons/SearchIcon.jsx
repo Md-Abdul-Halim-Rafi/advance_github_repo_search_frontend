@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export default function SearchIcon(props) {
 
@@ -23,4 +24,8 @@ export default function SearchIcon(props) {
             ></path>
         </svg>
     );
+}
+
+SearchIcon.propTypes = {
+    size: PropTypes.string
 }

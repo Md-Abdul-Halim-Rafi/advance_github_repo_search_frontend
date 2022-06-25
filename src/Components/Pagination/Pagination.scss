@@ -1,0 +1,70 @@
+.Pagination {
+    display: flex;
+    list-style-type: none;
+
+    &--item {
+        height: 32px;
+        display: flex;
+        font-size: 13px;
+        min-width: 32px;
+        padding: 0 12px;
+        color: #183052;
+        margin: auto 4px;
+        line-height: 1.43;
+        font-weight: bold;
+        text-align: center;
+        align-items: center;
+        border-radius: 16px;
+        box-sizing: border-box;
+        letter-spacing: 0.01071em;
+
+        &.dots:hover {
+            cursor: default;
+            background-color: transparent;
+        }
+
+        &:hover {
+            cursor: pointer;
+            background-color: #18305220;
+        }
+
+        &.active {
+            color: #FFFFFF;
+            background-color: #183052;
+        }
+
+        .arrow {
+            &::before {
+                content: '';
+                width: 0.4em;
+                height: 0.4em;
+                position: relative;
+                display: inline-block;
+                border-right: 0.12em solid rgba(0, 0, 0, 0.87);
+                border-top: 0.12em solid rgba(0, 0, 0, 0.87);
+            }
+
+            &.left {
+                transform: rotate(-135deg) translate(-50%);
+            }
+
+            &.right {
+                transform: rotate(45deg);
+            }
+        }
+
+        &.disabled {
+            pointer-events: none;
+
+            .arrow::before {
+                border-right: 0.12em solid rgba(0, 0, 0, 0.43);
+                border-top: 0.12em solid rgba(0, 0, 0, 0.43);
+            }
+
+            &:hover {
+                background-color: transparent;
+                cursor: default;
+            }
+        }
+    }
+}

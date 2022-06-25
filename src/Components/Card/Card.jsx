@@ -3,17 +3,23 @@ import dayjs from "dayjs";
 import PropTypes from "prop-types";
 
 import "./Card.scss";
+import ExternalOpenIcon from "Components/SvgIcons/ExternalOpenIcon";
 
 export default function Card(props) {
 
-    const { 
+    const {
         name, author, description, language,
-        topContributorUsername, topContributorA, topContributorD, 
+        topContributorUsername, topContributorA, topContributorD,
         topContributorC, updatedAt, url
     } = props;
 
     return (
-        <a className="Card" href={url} rel="noopener noreferrer" target="_blank">
+        <a
+            className="Card"
+            href={url}
+            rel="noopener noreferrer"
+            target="_blank"
+        >
             <div className="Card--repositoryInfo">
                 <h2 className="Card--repositoryInfo--name">{name}</h2>
                 <p className="Card--repositoryInfo--author">{author}</p>
@@ -49,23 +55,27 @@ export default function Card(props) {
                     </p>
                 </div>
 
-                <p className="Card--updatedAt">
-                    Updated on {dayjs(updatedAt).format("MMM DD, YYYY")}
-                </p>
+                <div className="Card--extra">
+                    <p className="Card--updatedAt">
+                        Updated on {dayjs(updatedAt).format("MMM DD, YYYY")}
+                    </p>
+
+                    <ExternalOpenIcon />
+                </div>
             </div>
         </a>
     );
 }
 
 Card.propTypes = {
+    language: PropTypes.string,
+    description: PropTypes.string,
     url: PropTypes.string.isRequired,
+    topContributorA: PropTypes.number,
+    topContributorD: PropTypes.number,
+    topContributorC: PropTypes.number,
     name: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
-    language: PropTypes.string.isRequired,
     updatedAt: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    topContributorA: PropTypes.number.isRequired,
-    topContributorD: PropTypes.number.isRequired,
-    topContributorC: PropTypes.number.isRequired,
-    topContributorUsername: PropTypes.string.isRequired
+    topContributorUsername: PropTypes.string
 }
